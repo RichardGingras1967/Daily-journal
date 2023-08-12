@@ -79,10 +79,10 @@ app.get("/contact", (req, res) => {
 app.get("/howto", (req, res) => {
   res.render("howto.ejs", {
     data: [
-      { header: "Compose", text: composeText, bar: "localhost:3000/<b>compose</b>/work"},
-      { header: "View", text: viewText, bar: "localhost:3000/<b>view</b>/work" },
-      { header: "Read", text: readText, bar: "localhost:3000/<b>read</b>/work/6579..7yu8" },
-      { header: "Delete", text: deleteText, bar: "localhost:3000/<b>delete</b>/work/6579..7yu8"},
+      { header: "Compose", text: composeText, bar: "..app/<b>compose</b>/<em>category</em>"},
+      { header: "View", text: viewText, bar: "..app/<b>view</b>/<em>category</em>" },
+      { header: "Read", text: readText, bar: "..app/<b>read</b>/<em>category</em>/<em>post</em>" },
+      { header: "Delete", text: deleteText, bar: "..app/<b>delete</b>/<em>category</em>/<em>post</em>"},
     ]
   });
 });
