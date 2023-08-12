@@ -1,0 +1,21 @@
+<%- include("partials/header.ejs") %>
+
+<body>
+  <div class="how-container">
+    <% if (locals.data) { %> 
+         
+      <% data.forEach((section)=>{ %>
+
+      <div id="div-header">
+        <h3 class="header-how-to"><%= section.header %></h3>
+        <div class="img-header"><img class="img-lock" src="/images/lock.png" alt=""><%- section.bar%></div>
+      
+      </div>
+    
+      <p class="homePage"><%- section.text %></p>
+    
+      <% }); %> <% } %>
+
+  </div>
+
+</body>

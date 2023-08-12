@@ -1,0 +1,1 @@
+All the texts created under this category will be grouped and accessible by the path /<b>view</b>/<em>category</em>. Also, you can access the list of the created categories with the path /<b>categories</b>

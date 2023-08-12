@@ -1,0 +1,15 @@
+
+
+<%- include("partials/header.ejs") %>
+<body>
+    <div id="div-about">
+        <h1>About</h1>
+        <% if (locals.aboutContent) { %>
+            <textarea><%= aboutContent %></textarea>
+        <% } %>
+    </div>
+   
+</body>
+
+
+<%- include("partials/footer.ejs") %>

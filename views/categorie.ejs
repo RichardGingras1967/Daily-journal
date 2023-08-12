@@ -1,0 +1,17 @@
+<%- include("partials/header.ejs") %>
+
+<body>
+
+    <% posts.forEach((item)=>{ %>
+        
+        <% if(item.text.length > 0) {%>
+            <h3><%= item.title %></h3>
+            <p><%= item.text.substr(0,100) + " ..." %> <a href="/read/<%=categorie%>/<%=item._id%>" >Read more</a></p>
+        <%}else {%>
+            <h2><%= item.title %></h2>
+        <%}%>
+        
+    <% }); %>
+</body>
+
+

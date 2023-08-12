@@ -1,0 +1,173 @@
+.container-fluid {
+    padding-top: 70px;
+    padding-bottom: 70px;
+}
+.navbar {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border: 0;
+    border-radius: 0;
+    margin-bottom: 0;
+    font-size: 12px;
+    letter-spacing: 5px;
+}
+.navbar-nav  li a:hover {
+    color: #1abc9c !important;
+}
+
+.footer-padding {
+	padding-bottom: 60px;
+}
+
+.footer {
+	position: absolute;
+	text-align: center;
+	bottom: 0;
+	width: 100%;
+	height: 60px;
+	background-color: #1abc9c;
+}
+
+.footer p {
+	margin-top: 25px;
+	font-size: 12px;
+  color: #fff;
+}
+
+
+#blogArea{
+    width: 100%;
+}
+
+#blogTitle{
+    width: 100%;
+
+}
+
+textarea{
+    width: 100%;
+    border: none;
+    resize: none;
+    height: 100vh;
+}
+
+.homePage{
+    
+    width:50%;
+}
+
+.view-section{
+    margin-top: 1rem;
+    
+}
+
+.error-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.how-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#back-home-btn{
+    width: 100px;
+    height: 30px;
+    margin-top: 50px;
+    border-radius: 15px;
+    border: none;
+    background-color: #AFDCEC;
+    font-weight: bold;
+    font-family:cursive;
+}
+
+#greeting{
+    font-size: 110px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-top: 5rem;
+    
+}
+
+#greeting:hover{
+    color: #0099CC !important;
+    transition: 1.0s;
+}
+
+#greeting:not(:hover){
+    transition: 1.0s;
+}
+
+#glad{
+    font-size: 20px;
+    color: darkgray;
+    font-family: Verdana, Geneva, Tahoma, sans-serif ;
+    
+}
+
+ a:hover{
+    color: #bc761a !important;
+}
+
+#div-header{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    margin: 5px;
+    
+}
+
+#how-to-btn:hover {
+    background-color: #0099CC !important;
+    color: aliceblue;
+    transition: 1.0s;
+    height: 35px;
+    margin-top: 20px;
+}
+
+#how-to-btn:not(:hover) {
+    
+    transition: 1.0s;
+}
+
+#how-to-btn{
+    border-radius: 15px; 
+    border: solid, 1px, black;
+    margin-top: 30px;
+    font-size: 12px;
+    width: 100px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif ;
+}
+
+.img-header{
+    display: none;
+    border:2px solid lightblue;
+    width: 300px;
+    height: 25px;
+    padding-left: 20px;
+    border-radius: 15px;
+    margin-top: 10px;
+
+}
+
+.header-how-to{
+    width: 150px;
+}
+
+.header-how-to:hover + .img-header{
+    display: block;
+}
+
+.img-lock{
+    width: 13px;
+    margin-bottom: 2px;
+    margin-right: 5px;
+    margin-left: -10px
+    
+}

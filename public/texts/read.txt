@@ -1,0 +1,1 @@
+In the view list, you have a link for each post. Each link open a new page.

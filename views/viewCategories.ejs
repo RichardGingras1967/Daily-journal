@@ -1,0 +1,13 @@
+<%- include("partials/header.ejs") %>
+
+<body>
+  <% categories.forEach((category)=>{ %>
+
+  <p class="view-section">
+    <%= category %>
+
+    <a href="/view/<%=category%>">Section</a>
+  </p>
+
+  <% }); %>
+</body>

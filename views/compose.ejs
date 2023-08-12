@@ -1,0 +1,21 @@
+<%- include("partials/header.ejs") %>
+
+
+ 
+  <form id="myForm" method="post">
+
+    <h1><%= categorie %></h1>
+      <div class="form-group">
+        <label for="blogTitle" class="form-label">Title</label>
+        <input type="text" id="blogTitle" name="blogTitle" class="form-control" />
+
+        <label for="blogText" class="form-label">Post</label>
+        <textarea name="blogText" id="blogText" rows="6" class="form-control" ></textarea>
+      </div>
+
+      <input id="post" type="submit" class="btn btn-primary" name="publish" formaction="/compose/<%=`${categorie}`%>" />
+
+  </form>
+
+
+

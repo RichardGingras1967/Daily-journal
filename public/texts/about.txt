@@ -1,0 +1,6 @@
+If you see this, it is because you found the hidden pages of this project. Well..
+
+my name is Richard. A developer from Montreal, Canada. I really like the clean code approach. 
+So when I work, I try to make the code easy for another developer to read and understand. 
+
+It's not the easiest part.
