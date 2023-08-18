@@ -11,6 +11,10 @@ const sessions = require("express-session");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const MongoStore = require("connect-mongo");
+const {
+  generateFromEmail,
+  generateUsername,
+} = require("unique-username-generator");
 
 const app = express();
 
@@ -35,6 +39,11 @@ app.use(
     }),
   })
 );
+
+app.use(function(req, res, next) {
+  res.locals.user = req.session.user;
+  next();
+})
 
 const connectDB = async () => {
   mongoose.connect(process.env.MONGO_URI, {
@@ -104,13 +113,18 @@ app.get("/", (req, res) => {
 app.get("/login", (req, res) => {
   const message = req.session.message || "";
   req.session.message = null;
-  res.render("login.ejs", {message: message});
+  res.render("login.ejs", { message: message });
 });
 
 app.get("/register", (req, res) => {
+  const username = generateUsername("@", 0, 20);
+
   const message = req.session.message || "";
   req.session.message = null;
-  res.render("register.ejs", {message: message});
+  res.render("register.ejs", {
+    message: message,
+    username: username + ".com",
+  });
 });
 
 app.get("/logout", (req, res) => {
@@ -120,8 +134,6 @@ app.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
-
-
 app.post("/register", (req, res) => {
   const email = req.body.username;
   const password = req.body.password;
@@ -129,19 +141,25 @@ app.post("/register", (req, res) => {
   Client.findOne({ email: email })
     .then((user_exist) => {
       if (user_exist != null) {
-        req.session.message = "Sorry, username already taken."
+        req.session.message = "Sorry, username already taken.";
         res.redirect("/register");
       } else {
-        bcrypt.hash(password, saltRounds).then((hash) => {
-          const newUser = new Client({
-            email: email,
-            password: hash,
+        if (password.length < 3) {
+          req.session.message = "Sorry, choose a password with at least 3 caracters.";
+          res.redirect("/register");
+        } else {
+          bcrypt.hash(password, saltRounds).then((hash) => {
+            const newUser = new Client({
+              email: email,
+              password: hash,
+            });
+            newUser.save().then((addedUser) => {
+              req.session.userId = addedUser._id.toString();
+              req.session.userName = email;
+              res.redirect("/howto");
+            });
           });
-          newUser.save().then((addedUser) => {
-            req.session.userId = addedUser._id.toString();
-            res.redirect("/howto");
-          });
-        });
+        }
       }
     })
     .catch((err) => {
@@ -160,7 +178,7 @@ app.post("/login", (req, res) => {
           req.session.userId = user._id.toString();
           res.redirect("/howto");
         } else {
-          req.session.message = "Sorry, wrong username or password."
+          req.session.message = "Sorry, wrong username or password.";
           res.redirect("/login");
         }
       });
