@@ -26,18 +26,18 @@ const oneDay = 1000 * 60 * 60 * 24;
 app.use(
   sessions({
     secret: process.env.SECRET,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: { maxAge: oneDay },
     resave: false,
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_URI,
-     // mongoUrl: "mongodb://127.0.0.1:27017/ComposeDB",
+      // mongoUrl: "mongodb://127.0.0.1:27017/ComposeDB",
     }),
   })
 );
 
 const connectDB = async () => {
-    mongoose.connect(process.env.MONGO_URI, {
+  mongoose.connect(process.env.MONGO_URI, {
     //mongoose.connect("mongodb://127.0.0.1:27017/ComposeDB", {
     useNewUrlParser: true,
   });
@@ -71,7 +71,7 @@ const aboutContent = fs.readFileSync("public/texts/about.txt", "utf-8");
 const contactContent = fs.readFileSync("public/texts/contact.txt", "utf-8");
 
 app.get("/compose/:categorie", function (req, res) {
-  if (req.session.user) {
+  if (req.session.userId) {
     const categorie = _.capitalize(req.params.categorie);
 
     List.find({ categorie: categorie }).then((items) => {
@@ -102,11 +102,15 @@ app.get("/", (req, res) => {
 });
 
 app.get("/login", (req, res) => {
-  res.render("login.ejs");
+  const message = req.session.message || "";
+  req.session.message = null;
+  res.render("login.ejs", {message: message});
 });
 
 app.get("/register", (req, res) => {
-  res.render("register.ejs");
+  const message = req.session.message || "";
+  req.session.message = null;
+  res.render("register.ejs", {message: message});
 });
 
 app.get("/logout", (req, res) => {
@@ -116,31 +120,33 @@ app.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
-app.post("/register", (req, res) => {
-  try{
-    const email = req.body.username;
 
-  bcrypt.hash(req.body.password, saltRounds).then((hash) => {
-    const newUser = new Client({
-      email: email,
-      password: hash,
+
+app.post("/register", (req, res) => {
+  const email = req.body.username;
+  const password = req.body.password;
+
+  Client.findOne({ email: email })
+    .then((user_exist) => {
+      if (user_exist != null) {
+        req.session.message = "Sorry, username already taken."
+        res.redirect("/register");
+      } else {
+        bcrypt.hash(password, saltRounds).then((hash) => {
+          const newUser = new Client({
+            email: email,
+            password: hash,
+          });
+          newUser.save().then((addedUser) => {
+            req.session.userId = addedUser._id.toString();
+            res.redirect("/howto");
+          });
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
     });
-    newUser
-      .save()
-      .then((user, err) => {
-        req.session.user = user;
-        res.redirect("/howto");
-      })
-      
-  })
-  .catch((err) => {
-    console.log(err);
-    res.redirect("/login");
-  });
-  }catch(err){
-    console.log(err);
-  }
-  
 });
 
 app.post("/login", (req, res) => {
@@ -151,9 +157,10 @@ app.post("/login", (req, res) => {
       //user exist
       bcrypt.compare(req.body.password, user.password).then((granted) => {
         if (granted) {
-          req.session.user = user;
+          req.session.userId = user._id.toString();
           res.redirect("/howto");
         } else {
+          req.session.message = "Sorry, wrong username or password."
           res.redirect("/login");
         }
       });
@@ -267,7 +274,7 @@ app.get("/delete/:categorie/:id", (req, res) => {
   List.findOne(search, filter)
     .then((found) => {
       //only the author of the post can delete it
-      if (found.posts[0].author === req.session.user._id) {
+      if (found.posts[0].author === req.session.userId) {
         List.updateOne(filter, update)
           .then(() => {
             res.redirect("/view/" + categorie);
@@ -303,7 +310,7 @@ app.post("/compose/:categorie", (req, res) => {
   const data = {
     title: req.body.blogTitle,
     text: req.body.blogText,
-    author: req.session.user._id.toString(),
+    author: req.session.userId,
   };
 
   const filter = { categorie: categorie };

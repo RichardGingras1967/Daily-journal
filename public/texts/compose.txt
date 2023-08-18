@@ -1,1 +1,1 @@
-Enter the path <b>/compose/</b><em>category</em> in the navigation bar to access the composition section. You can enter the category of your choice. If this category does not exist, a new category will be created. 
+Enter the path <b>/compose/</b><em>category</em> in the navigation bar to access the composition section. You can enter the category of your choice. If this category does not exist, a new category will be created. You need to be logged to compose a message.

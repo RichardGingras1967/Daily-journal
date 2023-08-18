@@ -1,1 +1,1 @@
-To delete a post, all you have to do is enter <b>delete</b> in the path of this new created page and hit enter. Also, you can delete a category with the path /<b>deleteAll</b>/<em>category</em>.
+To delete a post, all you have to do is enter <b>delete</b> in the path of this new created page and hit enter. You need to be logged to delete a message.
