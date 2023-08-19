@@ -1,10 +1,13 @@
 const { postSchema, listSchema, userSchema, Post, List, Client } = require("../models/schemas");
 const _ = require("lodash");
+
 const getComposeCategorie = function (req, res) {
+  
   if (req.session.userId) {
     const categorie = _.capitalize(req.params.categorie);
 
-    List.find({ categorie: categorie }).then((items) => {
+    List.find({ categorie: categorie })
+    .then((items) => {
       if (items.length === 0) {
         const greetingPost = new Post({
           title: "Welcome to your " + categorie + " section",
@@ -18,16 +21,19 @@ const getComposeCategorie = function (req, res) {
 
         list.save();
         res.redirect("/compose/" + categorie);
+
       } else {
         res.render("compose.ejs", { categorie: categorie });
       }
     });
+
   } else {
     res.redirect("/login");
   }
 };
 
 const getDeleteCategoriebyId = function (req, res) {
+
   const id = req.params.id;
   const categorie = req.params.categorie;
 
@@ -47,7 +53,7 @@ const getDeleteCategoriebyId = function (req, res) {
             res.redirect("/error");
           });
       } else {
-        res.send("Unautorise action, you can delete only yours post..");
+        res.send("Unautorise action, you can't delete others post..");
       }
     })
     .catch((err) => {
@@ -56,7 +62,9 @@ const getDeleteCategoriebyId = function (req, res) {
 };
 
 const postComposeCategorie = function (req, res) {
+
   const categorie = req.params.categorie;
+  
   const data = {
     title: req.body.blogTitle,
     text: req.body.blogText,
@@ -75,8 +83,4 @@ const postComposeCategorie = function (req, res) {
     });
 };
 
-module.exports = {
-  getComposeCategorie,
-  getDeleteCategoriebyId,
-  postComposeCategorie,
-};
+module.exports = { getComposeCategorie, getDeleteCategoriebyId, postComposeCategorie };

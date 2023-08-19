@@ -1,11 +1,5 @@
-const {
-  composeText,
-  viewText,
-  readText,
-  deleteText,
-  aboutContent,
-  contactContent,
-} = require("../utils/readFile");
+const { composeText, viewText, readText,
+        deleteText, aboutContent, contactContent } = require("../utils/readFile");
 
 const getAbout = function (req, res) {
   res.render("about.ejs", { aboutContent: aboutContent });

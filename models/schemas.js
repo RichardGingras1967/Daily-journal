@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const { mongoose } = require("../config/sessions");
 
 const postSchema = new mongoose.Schema({
     title: String,
